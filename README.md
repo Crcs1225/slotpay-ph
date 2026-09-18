@@ -20,6 +20,8 @@ Start with:
 
 ## Getting started
 
+Use Node.js 22.22.2 or newer. CI uses Node.js 22.22.2 and npm 10.8.2.
+
 Install dependencies, initialize a local Convex deployment, and run the application:
 
 ```bash

@@ -2,6 +2,10 @@
   "name": "slotpay-ph",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22.22.2"
+  },
+  "packageManager": "npm@10.8.2",
   "scripts": {
     "dev": "concurrently -k -n web,convex \"npm:dev:web\" \"npm:dev:convex\"",
     "dev:web": "next dev",
