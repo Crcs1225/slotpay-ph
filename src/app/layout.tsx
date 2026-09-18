@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import type { ReactNode } from "react";
 import "./globals.css";
 import { Providers } from "./providers";
 
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   description: "Booking and reservation deposit management for Philippine service businesses.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
