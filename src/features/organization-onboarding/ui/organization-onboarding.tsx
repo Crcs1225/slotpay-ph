@@ -89,7 +89,7 @@ export function OrganizationOnboarding() {
         <main className="min-w-0 space-y-5">
           {currentOrganization.status === "rejected" && <Notice title="Changes requested" text={setup?.verification?.decisionReason ?? "Review the setup and submit again."} />}
           {currentOrganization.status === "submitted" && <Notice title="Activation review in progress" text="Your setup is locked while SlotPay reviews the submitted business and payment-account evidence." />}
-          {currentOrganization.status === "active" && <Notice title="Business activated" text="Your public non-bookable preview is live. Booking functionality arrives in Phase 3 and Phase 4." success />}
+          {currentOrganization.status === "active" && <Notice title="Business activated" text="Your public non-bookable preview is live. Staff can manage appointments in the business calendar; public booking is being prepared." success />}
 
           {!locked && <>
             <SetupSection icon={<Building2 />} number="01" title="Business profile" description="The public identity and contact details customers will recognize.">

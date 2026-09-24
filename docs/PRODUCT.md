@@ -80,7 +80,9 @@ Appointment and Deposit states are independent.
 
 **Appointment states**: `pending`, `confirmed`, `completed`, `cancelled`, `no_show`, `expired`.
 
-**Deposit states**: `awaiting_payment`, `processing`, `needs_review`, `suspicious`, `verified`, `rejected`, `refund_due`, `refunded_external`, `retained`.
+**Deposit states**: `not_required`, `awaiting_payment`, `processing`, `needs_review`, `suspicious`, `verified`, `rejected`, `refund_due`, `refunded_external`, `retained`.
+
+Services with a zero-PHP Deposit use `not_required`; this is not payment Verification. When a Booking is cancelled, staff records `not_paid`, `retained`, `refund_due`, or `refunded_external` as its Deposit Disposition. Only a previously accepted Deposit can be retained or refunded.
 
 Rules:
 

@@ -10,6 +10,7 @@
 
 import type * as activationAdmin from "../activationAdmin.js";
 import type * as auth from "../auth.js";
+import type * as bookings from "../bookings.js";
 import type * as http from "../http.js";
 import type * as identity from "../identity.js";
 import type * as lib_authz from "../lib/authz.js";
@@ -26,6 +27,7 @@ import type {
 declare const fullApi: ApiFromModules<{
   activationAdmin: typeof activationAdmin;
   auth: typeof auth;
+  bookings: typeof bookings;
   http: typeof http;
   identity: typeof identity;
   "lib/authz": typeof lib_authz;

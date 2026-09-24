@@ -82,7 +82,7 @@ The authoritative acceptance of a Deposit by an Owner or Manager, or later by an
 _Avoid_: OCR match, likely match
 
 **Deposit Disposition**:
-The recorded outcome of an accepted Deposit after cancellation: retained, refund due, or refunded outside SlotPay.
+The recorded outcome after cancellation: not paid, retained, refund due, or refunded outside SlotPay.
 
 ## Platform operations
 

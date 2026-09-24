@@ -33,6 +33,7 @@ export default defineSchema({
     description: v.optional(v.string()),
     timezone: v.string(),
     currency: v.literal("PHP"),
+    bookingIntervalMinutes: v.optional(v.number()),
     status: v.union(
       v.literal("draft"),
       v.literal("submitted"),
@@ -151,6 +152,57 @@ export default defineSchema({
     "providerId",
     "localDate",
   ]),
+
+  customers: defineTable({
+    organizationId: v.id("organizations"),
+    name: v.string(),
+    mobileE164: v.string(),
+    email: v.optional(v.string()),
+    lastBookingAt: v.optional(v.number()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_organization_and_mobile", ["organizationId", "mobileE164"])
+    .index("by_organization_and_last_booking", ["organizationId", "lastBookingAt"]),
+
+  bookings: defineTable({
+    organizationId: v.id("organizations"),
+    publicCode: v.string(),
+    customerId: v.id("customers"),
+    serviceId: v.id("services"),
+    providerId: v.id("providers"),
+    source: v.union(v.literal("staff"), v.literal("walk_in"), v.literal("phone"), v.literal("messenger"), v.literal("public")),
+    startAt: v.number(),
+    endAt: v.number(),
+    serviceName: v.string(),
+    priceCentavos: v.number(),
+    depositCentavos: v.number(),
+    durationMinutes: v.number(),
+    appointmentStatus: v.union(v.literal("pending"), v.literal("confirmed"), v.literal("completed"), v.literal("cancelled"), v.literal("no_show"), v.literal("expired")),
+    depositStatus: v.union(v.literal("not_required"), v.literal("awaiting_payment"), v.literal("processing"), v.literal("needs_review"), v.literal("suspicious"), v.literal("verified"), v.literal("rejected"), v.literal("refund_due"), v.literal("refunded_external"), v.literal("retained")),
+    depositDisposition: v.optional(v.union(v.literal("not_paid"), v.literal("retained"), v.literal("refund_due"), v.literal("refunded_external"))),
+    createdByUserId: v.id("users"),
+    decisionReason: v.optional(v.string()),
+    confirmedAt: v.optional(v.number()),
+    completedAt: v.optional(v.number()),
+    cancelledAt: v.optional(v.number()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_organization_and_start", ["organizationId", "startAt"])
+    .index("by_organization_and_provider_and_start", ["organizationId", "providerId", "startAt"])
+    .index("by_organization_and_customer_and_start", ["organizationId", "customerId", "startAt"])
+    .index("by_organization_and_status_and_start", ["organizationId", "appointmentStatus", "startAt"])
+    .index("by_organization_and_public_code", ["organizationId", "publicCode"]),
+
+  bookingHolds: defineTable({
+    organizationId: v.id("organizations"),
+    providerId: v.id("providers"),
+    startAt: v.number(),
+    endAt: v.number(),
+    expiresAt: v.optional(v.number()),
+    releasedAt: v.optional(v.number()),
+  }).index("by_organization_and_provider_and_start", ["organizationId", "providerId", "startAt"]),
 
   paymentDestinations: defineTable({
     organizationId: v.id("organizations"),

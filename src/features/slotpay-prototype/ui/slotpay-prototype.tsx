@@ -41,6 +41,7 @@ const money = new Intl.NumberFormat("en-PH", {
 });
 
 const statusStyles: Record<DepositStatus, string> = {
+  not_required: "bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-200",
   awaiting_payment: "bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-200",
   processing: "bg-sky-100 text-sky-900 dark:bg-sky-950 dark:text-sky-200",
   needs_review: "bg-orange-100 text-orange-900 dark:bg-orange-950 dark:text-orange-200",
@@ -53,6 +54,7 @@ const statusStyles: Record<DepositStatus, string> = {
 };
 
 const statusLabels: Record<DepositStatus, string> = {
+  not_required: "No deposit required",
   awaiting_payment: "Awaiting deposit",
   processing: "Processing",
   needs_review: "Needs review",

@@ -93,6 +93,7 @@ export const createOrganization = authenticatedMutation({
       slug: normalizedSlug,
       timezone: "Asia/Manila",
       currency: "PHP",
+      bookingIntervalMinutes: 15,
       status: "draft",
       trialEndsAt,
       createdBy: ctx.userId,

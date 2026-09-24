@@ -134,8 +134,10 @@ The protected review hold does not auto-expire. Overdue reviews create dashboard
 2. Staff selects Service, time, and optionally a Provider.
 3. The Availability Engine claims an eligible Provider atomically.
 4. Staff chooses whether the configured Deposit is already externally verified or should be requested.
-5. If requested, SlotPay sends the Booking Access Link and starts the payment window.
+5. If requested, the Booking remains pending for the later guest access and payment-window flow. Phase 3 does not send an access link or start an expiring payment hold.
 6. If externally verified, staff records source and reason; the Booking is confirmed and audited without requiring a Receipt.
+
+In Phase 3, Owners and Managers use the day/week business calendar to review bookings, add staff, walk-in, phone, or Messenger bookings, and record completion, no-show, cancellation, and rescheduling. Customer records are Organization-local and matched by normalized Philippine mobile number. Availability and booking claims use `Asia/Manila`, the configured booking interval (15 minutes by default), Provider rules and exceptions, active holds, and non-terminal bookings. Each claim is rechecked inside the mutation; a reschedule atomically replaces the schedule and Provider assignment.
 
 ## Cancellation
 

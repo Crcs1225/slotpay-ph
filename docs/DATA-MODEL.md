@@ -1,6 +1,6 @@
 # Convex data model
 
-> Implementation note (Phase 2): `organizations`, `subscriptions`, `services`, `providers`, `serviceProviders`, `availabilityRules`, `availabilityExceptions`, `paymentDestinations`, and `merchantVerifications` are represented in the Convex schema. Later booking, receipt, notification, and billing entities below remain target-state models.
+> Implementation note (Phase 3): `organizations`, `subscriptions`, catalog and availability tables, `customers`, `bookings`, and `bookingHolds` are represented in the Convex schema. Receipt, notification, and full billing entities below remain target-state models.
 
 ## Conventions
 
@@ -58,6 +58,7 @@ erDiagram
 
 - `name`, `slug`, `description`
 - `timezone`: `Asia/Manila`
+- `bookingIntervalMinutes`: optional during schema evolution; defaults to `15` when absent
 - `currency`: `PHP`
 - `address`: structured street/locality/region/postal fields
 - `addressVisibility`: `public` or `after_confirmation`
@@ -135,7 +136,7 @@ Multiple non-overlapping windows per Provider/day are allowed.
 - `startLocalTime`, `endLocalTime`, `reason`
 - Index: `by_organization_id_and_provider_id_and_local_date`
 
-**customers**
+**customers** (implemented)
 
 - `organizationId`, `name`, `mobileE164`, optional `email`
 - `lastBookingAt`
@@ -152,14 +153,15 @@ Customer records are Organization-local. SlotPay does not create a global custom
 
 Raw OTPs are never stored. Creation and verification are rate-limited by Organization, phone, IP/fingerprint, and challenge.
 
-**bookings**
+**bookings** (staff operations implemented; public lifecycle fields reserved for later phases)
 
 - `organizationId`, `publicCode`, `customerId`, `serviceId`, `providerId`
 - `source`: `public`, `staff`, `walk_in`, `phone`, `messenger`
 - `startAt`, `endAt`
 - immutable snapshots: `serviceName`, `priceCentavos`, `depositCentavos`, `durationMinutes`
 - `appointmentStatus`: `pending`, `confirmed`, `completed`, `cancelled`, `no_show`, `expired`
-- `depositStatus`: `awaiting_payment`, `processing`, `needs_review`, `suspicious`, `verified`, `rejected`, `refund_due`, `refunded_external`, `retained`
+- `depositStatus`: `not_required`, `awaiting_payment`, `processing`, `needs_review`, `suspicious`, `verified`, `rejected`, `refund_due`, `refunded_external`, `retained`
+- `depositDisposition`: optional `not_paid`, `retained`, `refund_due`, or `refunded_external`, recorded on cancellation; only a verified Deposit can be retained or refunded
 - `bookingAccessTokenHash`, `bookingAccessExpiresAt`
 - `createdByUserId`: optional for public bookings
 - `confirmedAt`, `completedAt`, `cancelledAt`, `expiredAt`: optional timestamps
@@ -172,7 +174,7 @@ Raw OTPs are never stored. Creation and verification are rate-limited by Organiz
 
 Snapshots prevent later Service edits from changing historical financial or scheduling facts.
 
-**bookingHolds**
+**bookingHolds** (schema reserved for public OTP and payment flows)
 
 - `organizationId`, `bookingId`, `providerId`
 - `kind`: `otp`, `payment`, `receipt_review`

@@ -2,7 +2,7 @@
 
 ## Status
 
-This document describes the approved target architecture. Phase 1 now implements the Convex backend, Convex Auth entry flow, tenant/platform authorization foundation, Audit Events, and CI. Booking, receipt, notification, billing, and third-party provider modules remain target architecture for later phases.
+This document describes the approved architecture. Phases 1 and 2 implement the Convex backend, Convex Auth entry flow, tenant/platform authorization foundation, Audit Events, onboarding, and Merchant Activation. Phase 3 now implements staff scheduling and the business calendar. Public guest booking, receipts, notifications, billing, and third-party provider modules remain later-phase work.
 
 ## System context
 
@@ -125,9 +125,9 @@ Convex does not provide database row-level security. Tenant isolation is an appl
 Availability is computed rather than pre-generated:
 
 1. Load eligible Providers for the Service.
-2. Apply weekly availability and dated exceptions.
+2. Apply weekly availability and dated exceptions in the Organization timezone (`Asia/Manila`).
 3. Subtract active provisional holds, payment holds, protected reviews, and non-terminal Bookings.
-4. Return starts aligned to the Organization's booking interval.
+4. Return starts aligned to the Organization's booking interval (15 minutes by default).
 5. On claim, recompute inside one mutation and insert the hold only if no overlap exists.
 
 For “any Provider,” assignment is deterministic: choose the eligible Provider with the fewest active appointments that day, then stable-sort by Provider ID. A reschedule claims the replacement time and releases the old time in one mutation.

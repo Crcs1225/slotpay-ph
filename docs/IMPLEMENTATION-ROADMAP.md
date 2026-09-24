@@ -15,6 +15,7 @@ The authoritative public-launch scope, deliverables, required tests, and exit ga
 
 - Phase 1 is implemented locally: Convex Auth, tenant/platform authorization wrappers, audit events, tests, and CI contracts.
 - Phase 2 is implemented locally: self-serve trial onboarding, merchant setup and activation, private evidence review, admin decisions, SSR marketing/legal pages, and an activated non-bookable public preview.
+- Phase 3 scheduling is implemented locally: Organization-local Customers, availability computation, atomic staff booking claims, rescheduling and outcome changes, and a day/week business calendar. Public booking, OTP, access links, expiring payment holds, and notifications remain later-phase work.
 - A linked Convex preview deployment and production environment remain deployment gates; local completion does not imply production release.
 
 ## Delivery rule

@@ -7,6 +7,7 @@ export type AppointmentStatus =
   | "expired";
 
 export type DepositStatus =
+  | "not_required"
   | "awaiting_payment"
   | "processing"
   | "needs_review"
